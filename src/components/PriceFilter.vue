@@ -4,6 +4,38 @@
     <input id="threshold" v-model.number="local" type="number" step="0.1" min="0" />
     <span>kr/kWh</span>
     <button @click="apply">Använd</button>
+    <button class="secondary" @click="reset">Återställ</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const DEFAULT_THRESHOLD = 1.0
+
+const props = defineProps({
+  modelValue: { type: Number, default: DEFAULT_THRESHOLD },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const local = ref(props.modelValue)
+
+const apply = () => {
+  emit('update:modelValue', local.value)
+}
+
+const reset = () => {
+  // Återställer fältet till standardgränsen.
+  local.value = DEFAULT_THRESHOLD
+}
+</script>
+<template>
+  <div class="filter">
+    <label for="threshold">Markera timmar dyrare än</label>
+    <input id="threshold" v-model.number="local" type="number" step="0.1" min="0" />
+    <span>kr/kWh</span>
+    <button @click="apply">Använd</button>
     <button class="secondary" @click="reset">Rensa</button>
   </div>
 </template>
